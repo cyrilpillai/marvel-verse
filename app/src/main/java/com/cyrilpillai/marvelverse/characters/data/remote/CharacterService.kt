@@ -4,7 +4,7 @@ import com.cyrilpillai.marvelverse.characters.data.remote.model.CharacterResourc
 import com.cyrilpillai.marvelverse.core.network.adapter.model.NetworkResult
 import retrofit2.http.GET
 
-interface CharactersService {
+interface CharacterService {
     @GET("characters")
     suspend fun getCharacters(): NetworkResult<List<CharacterResource>>
 }

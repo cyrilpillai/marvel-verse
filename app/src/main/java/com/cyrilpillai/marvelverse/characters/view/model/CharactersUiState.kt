@@ -1,5 +1,7 @@
 package com.cyrilpillai.marvelverse.characters.view.model
 
+import com.cyrilpillai.marvelverse.characters.data.local.entity.CharacterEntity
+
 sealed class CharactersUiState {
     data object Loading : CharactersUiState()
 
@@ -16,4 +18,10 @@ data class CharacterItem(
     val id: Int,
     val name: String,
     val description: String
-)
+) {
+    constructor(characterEntity: CharacterEntity) : this(
+        id = characterEntity.id,
+        name = characterEntity.name,
+        description = characterEntity.description
+    )
+}

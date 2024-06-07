@@ -16,6 +16,7 @@ hilt = "2.51"
 retrofit = "2.11.0"
 moshiCodegen = "1.15.0"
 chucker = "4.0.0"
+room = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,9 @@ retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter
 moshi-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiCodegen" }
 chucker = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
 chucker-noOp = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chucker" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
