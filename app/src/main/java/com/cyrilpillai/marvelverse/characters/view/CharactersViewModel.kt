@@ -6,10 +6,9 @@ import com.cyrilpillai.marvelverse.characters.domain.CharactersRepo
 import com.cyrilpillai.marvelverse.characters.view.model.CharactersUiEvent
 import com.cyrilpillai.marvelverse.characters.view.model.CharactersUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,7 +16,7 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor(
     private val charactersRepo: CharactersRepo
 ) : ViewModel() {
-    val uiState: StateFlow<CharactersUiState> = charactersRepo.fetchCharacters()
+    /*val uiState: StateFlow<CharactersUiState> = charactersRepo.fetchCharacters()
         .map { characters ->
             CharactersUiState.Success(characters)
         }
@@ -25,11 +24,16 @@ class CharactersViewModel @Inject constructor(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = CharactersUiState.Loading
-        )
+        )*/
+    private val _uiState: MutableStateFlow<CharactersUiState> =
+        MutableStateFlow(CharactersUiState.Loading)
+    val uiState: StateFlow<CharactersUiState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            charactersRepo.fetchCharacters()
+            charactersRepo.fetchCharacters().collect {
+                _uiState.value = CharactersUiState.Success(it)
+            }
         }
     }
 

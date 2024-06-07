@@ -14,5 +14,6 @@ sealed class CharactersUiState {
 
 data class CharacterItem(
     val id: Int,
-    val name: String
+    val name: String,
+    val description: String
 )

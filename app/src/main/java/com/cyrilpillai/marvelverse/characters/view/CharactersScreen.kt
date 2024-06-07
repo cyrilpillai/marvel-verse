@@ -96,7 +96,12 @@ fun CharactersScreenPreview() {
             characters = listOf(
                 CharacterItem(
                     id = 101,
-                    name = "Ironman"
+                    name = "Avengers",
+                    description = """Earth's Mightiest Heroes joined forces to take on 
+                        |threats that were too big for any one hero to tackle. With a 
+                        |roster that has included Captain America, Iron Man, Ant-Man, Hulk, 
+                        |Thor, Wasp and dozens more over the years, the Avengers have come 
+                        |to be regarded as Earth's No. 1 team.""".trimMargin()
                 )
             )
         ),
