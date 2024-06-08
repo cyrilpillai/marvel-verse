@@ -39,6 +39,7 @@ import com.cyrilpillai.marvelverse.R
 import com.cyrilpillai.marvelverse.characters.view.model.CharacterItem
 import com.cyrilpillai.marvelverse.characters.view.model.CharactersUiEvent
 import com.cyrilpillai.marvelverse.characters.view.model.CharactersUiState
+import com.cyrilpillai.marvelverse.ui.theme.Red100
 
 @Composable
 fun CharactersRoute(
@@ -66,6 +67,14 @@ fun CharactersScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color.White,
+                        Red100,
+                    )
+                )
+            )
     ) {
         when (state) {
             is CharactersUiState.Loading -> {
@@ -96,11 +105,6 @@ fun CharacterView(
 ) {
     var sizeImage by remember { mutableStateOf(IntSize.Zero) }
 
-    val gradient = Brush.verticalGradient(
-        colors = listOf(Color.Transparent, Color.Black),
-        startY = sizeImage.height.toFloat() / 3,  // 1/3
-        endY = sizeImage.height.toFloat()
-    )
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -124,7 +128,13 @@ fun CharacterView(
         Box(
             modifier = Modifier
                 .matchParentSize()
-                .background(gradient)
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(Color.Transparent, Color.Black),
+                        startY = sizeImage.height.toFloat() / 3,  // 1/3
+                        endY = sizeImage.height.toFloat()
+                    )
+                )
         )
         Text(
             text = characterItem.name,
