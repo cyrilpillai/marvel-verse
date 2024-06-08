@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.coil.compose)
 
     ksp(libs.hilt.compiler)
     ksp(libs.moshi.codegen)

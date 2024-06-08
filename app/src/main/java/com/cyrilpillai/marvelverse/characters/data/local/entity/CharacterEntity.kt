@@ -9,11 +9,13 @@ import com.cyrilpillai.marvelverse.characters.data.remote.model.CharacterResourc
 data class CharacterEntity(
     @PrimaryKey @ColumnInfo(name = "id") val id: Int,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "description") val description: String
+    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "thumbnail_url") val thumbnailUrl: String,
 ) {
     constructor(characterResource: CharacterResource) : this(
         id = characterResource.id,
         name = characterResource.name,
-        description = characterResource.description
+        description = characterResource.description,
+        thumbnailUrl = characterResource.thumbnailResource.url
     )
 }

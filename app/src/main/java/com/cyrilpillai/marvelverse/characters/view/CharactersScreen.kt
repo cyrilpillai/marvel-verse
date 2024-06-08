@@ -1,31 +1,48 @@
 package com.cyrilpillai.marvelverse.characters.view
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
+import com.cyrilpillai.marvelverse.R
 import com.cyrilpillai.marvelverse.characters.view.model.CharacterItem
 import com.cyrilpillai.marvelverse.characters.view.model.CharactersUiEvent
 import com.cyrilpillai.marvelverse.characters.view.model.CharactersUiState
 
 @Composable
 fun CharactersRoute(
-    onCharacterClicked: (characterId: String) -> Unit,
+    onCharacterClicked: (characterId: Int) -> Unit,
     viewModel: CharactersViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -41,7 +58,7 @@ fun CharactersRoute(
 fun CharactersScreen(
     state: CharactersUiState,
     onEvent: (event: CharactersUiEvent) -> Unit,
-    onCharacterClicked: (characterId: String) -> Unit,
+    onCharacterClicked: (characterId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -56,14 +73,13 @@ fun CharactersScreen(
             }
 
             is CharactersUiState.Success -> {
-                LazyColumn(
+                LazyVerticalStaggeredGrid(
+                    columns = StaggeredGridCells.Fixed(2),
                     contentPadding = PaddingValues(12.dp),
-                    modifier = Modifier
-                        .fillMaxSize()
+                    verticalItemSpacing = 12.dp,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(state.characters) {
-                        CharacterView(it, onCharacterClicked)
-                    }
+                    items(state.characters) { CharacterView(it, onCharacterClicked) }
                 }
             }
 
@@ -75,15 +91,53 @@ fun CharactersScreen(
 @Composable
 fun CharacterView(
     characterItem: CharacterItem,
-    onCharacterClicked: (characterId: String) -> Unit,
+    onCharacterClicked: (characterId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    var sizeImage by remember { mutableStateOf(IntSize.Zero) }
+
+    val gradient = Brush.verticalGradient(
+        colors = listOf(Color.Transparent, Color.Black),
+        startY = sizeImage.height.toFloat() / 3,  // 1/3
+        endY = sizeImage.height.toFloat()
+    )
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(24.dp)
+            )
+            .clickable { onCharacterClicked(characterItem.id) }
     ) {
-        Text(text = characterItem.name)
+        AsyncImage(
+            model = characterItem.thumbnailUrl,
+            placeholder = painterResource(id = R.drawable.ic_launcher_background),
+            contentDescription = "character image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .onGloballyPositioned {
+                    sizeImage = it.size
+                }
+        )
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .background(gradient)
+        )
+        Text(
+            text = characterItem.name,
+            color = Color.White,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(
+                    vertical = 8.dp,
+                    horizontal = 12.dp
+                )
+        )
     }
 }
 
@@ -101,7 +155,8 @@ fun CharactersScreenPreview() {
                         |threats that were too big for any one hero to tackle. With a 
                         |roster that has included Captain America, Iron Man, Ant-Man, Hulk, 
                         |Thor, Wasp and dozens more over the years, the Avengers have come 
-                        |to be regarded as Earth's No. 1 team.""".trimMargin()
+                        |to be regarded as Earth's No. 1 team.""".trimMargin(),
+                    thumbnailUrl = "http://i.annihil.us/u/prod/marvel/i/mg/9/20/5102c774ebae7.jpg"
                 )
             )
         ),

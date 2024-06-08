@@ -17,11 +17,13 @@ sealed class CharactersUiState {
 data class CharacterItem(
     val id: Int,
     val name: String,
-    val description: String
+    val description: String,
+    val thumbnailUrl: String
 ) {
     constructor(characterEntity: CharacterEntity) : this(
         id = characterEntity.id,
         name = characterEntity.name,
-        description = characterEntity.description
+        description = characterEntity.description,
+        thumbnailUrl = characterEntity.thumbnailUrl
     )
 }

@@ -15,7 +15,7 @@ fun NavController.navigateToCharactersScreen(
 }
 
 fun NavGraphBuilder.charactersScreen(
-    onCharacterClicked: (characterId: String) -> Unit
+    onCharacterClicked: (characterId: Int) -> Unit
 ) {
     composable(
         route = CHARACTERS_ROUTE,
