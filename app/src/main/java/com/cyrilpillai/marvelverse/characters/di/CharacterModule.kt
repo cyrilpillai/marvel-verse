@@ -25,7 +25,7 @@ interface CharacterModule {
 
         @Provides
         fun provideCharacterDao(appDatabase: MarvelVerseDatabase): CharacterDao {
-            return appDatabase.charactersDao()
+            return appDatabase.characterDao()
         }
     }
 }

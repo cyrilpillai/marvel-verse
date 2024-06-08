@@ -15,7 +15,7 @@ fun NavController.navigateToComicsScreen(
 }
 
 fun NavGraphBuilder.comicsScreen(
-    onComicClicked: (comicId: String) -> Unit
+    onComicClicked: (comicId: Int) -> Unit
 ) {
     composable(
         route = COMICS_ROUTE,

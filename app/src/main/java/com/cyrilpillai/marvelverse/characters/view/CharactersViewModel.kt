@@ -20,7 +20,9 @@ class CharactersViewModel @Inject constructor(
 ) : ViewModel() {
     val uiState: StateFlow<CharactersUiState> = characterRepo.getAllCharacters()
         .map { characters ->
-            CharactersUiState.Success(characters.map { CharacterItem(it) })
+            CharactersUiState.Success(
+                characters.map { CharacterItem(it) }
+            )
         }
         .stateIn(
             scope = viewModelScope,

@@ -171,6 +171,6 @@ fun CharactersScreenPreview() {
             )
         ),
         onEvent = {},
-        onCharacterClicked = {},
+        onCharacterClicked = {}
     )
 }

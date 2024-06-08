@@ -4,8 +4,17 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.cyrilpillai.marvelverse.characters.data.local.dao.CharacterDao
 import com.cyrilpillai.marvelverse.characters.data.local.entity.CharacterEntity
+import com.cyrilpillai.marvelverse.comics.data.local.dao.ComicDao
+import com.cyrilpillai.marvelverse.comics.data.local.entity.ComicEntity
 
-@Database(entities = [CharacterEntity::class], version = 1)
+@Database(
+    entities = [
+        CharacterEntity::class,
+        ComicEntity::class
+    ],
+    version = 1
+)
 abstract class MarvelVerseDatabase : RoomDatabase() {
-    abstract fun charactersDao(): CharacterDao
+    abstract fun characterDao(): CharacterDao
+    abstract fun comicDao(): ComicDao
 }
