@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.cyrilpillai.marvelverse.events.view.EventListRoute
+import com.cyrilpillai.marvelverse.events.view.list.EventListRoute
 
 const val EVENT_LIST_ROUTE = "event_list_route"
 
