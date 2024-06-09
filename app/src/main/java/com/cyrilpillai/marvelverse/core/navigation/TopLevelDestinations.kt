@@ -1,37 +1,38 @@
 package com.cyrilpillai.marvelverse.core.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.Menu
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.cyrilpillai.marvelverse.R
+import com.cyrilpillai.marvelverse.characters.navigation.CHARACTER_LIST_ROUTE
+import com.cyrilpillai.marvelverse.comics.navigation.COMIC_LIST_ROUTE
+import com.cyrilpillai.marvelverse.events.navigation.EVENT_LIST_ROUTE
 
 enum class TopLevelDestination(
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-    val iconTextId: Int,
-    val titleTextId: Int
+    val id: String,
+    @StringRes val iconTextId: Int,
+    @StringRes val titleTextId: Int,
+    @DrawableRes val selectedIcon: Int,
+    @DrawableRes val unselectedIcon: Int,
 ) {
     CHARACTERS(
-        selectedIcon = Icons.Default.AccountCircle,
-        unselectedIcon = Icons.Outlined.AccountCircle,
+        id = CHARACTER_LIST_ROUTE,
         iconTextId = R.string.characters_title,
-        titleTextId = R.string.characters_title
+        titleTextId = R.string.characters_title,
+        selectedIcon = R.drawable.characters_nav_icon_selected,
+        unselectedIcon = R.drawable.characters_nav_icon_unselected,
     ),
     COMICS(
-        selectedIcon = Icons.Filled.Email,
-        unselectedIcon = Icons.Outlined.Email,
+        id = COMIC_LIST_ROUTE,
         iconTextId = R.string.comics_title,
-        titleTextId = R.string.comics_title
+        titleTextId = R.string.comics_title,
+        selectedIcon = R.drawable.comics_nav_icon_selected,
+        unselectedIcon = R.drawable.comics_nav_icon_unselected,
     ),
-    SERIES(
-        selectedIcon = Icons.Default.Menu,
-        unselectedIcon = Icons.Outlined.Menu,
-        iconTextId = R.string.series_title,
-        titleTextId = R.string.series_title
+    EVENTS(
+        id = EVENT_LIST_ROUTE,
+        iconTextId = R.string.events_title,
+        titleTextId = R.string.events_title,
+        selectedIcon = R.drawable.events_nav_icon_selected,
+        unselectedIcon = R.drawable.events_nav_icon_unselected,
     ),
 }

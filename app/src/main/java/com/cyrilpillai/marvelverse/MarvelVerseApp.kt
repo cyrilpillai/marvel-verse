@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -23,7 +24,7 @@ import com.cyrilpillai.marvelverse.core.navigation.MarvelNavigationBarItem
 import com.cyrilpillai.marvelverse.core.navigation.MarvelVerseNavHost
 import com.cyrilpillai.marvelverse.core.navigation.MarvelVerseNavigationBar
 import com.cyrilpillai.marvelverse.core.navigation.TopLevelDestination
-import com.cyrilpillai.marvelverse.series.navigation.navigateToSeriesScreen
+import com.cyrilpillai.marvelverse.events.navigation.navigateToEventListScreen
 import com.cyrilpillai.marvelverse.ui.theme.MarvelVerseTheme
 
 @Composable
@@ -41,9 +42,19 @@ fun MarvelVerseApp() {
                                 destination
                             ),
                             onClick = { onNavigationBarItemClicked(navController, destination) },
-                            label = { Text(stringResource(destination.titleTextId)) },
-                            selectedIcon = { Icon(destination.selectedIcon, null) },
-                            unselectedIcon = { Icon(destination.unselectedIcon, null) }
+                            label = { Text(stringResource(destination.iconTextId)) },
+                            selectedIcon = {
+                                Icon(
+                                    painter = painterResource(id = destination.selectedIcon),
+                                    "nav selected icon"
+                                )
+                            },
+                            unselectedIcon = {
+                                Icon(
+                                    painter = painterResource(id = destination.unselectedIcon),
+                                    "nav unselected icon"
+                                )
+                            }
                         )
                     }
                 }
@@ -84,7 +95,7 @@ private fun onNavigationBarItemClicked(
             topLevelNavOptions
         )
 
-        TopLevelDestination.SERIES -> navController.navigateToSeriesScreen(
+        TopLevelDestination.EVENTS -> navController.navigateToEventListScreen(
             topLevelNavOptions
         )
     }
@@ -92,7 +103,7 @@ private fun onNavigationBarItemClicked(
 
 private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
     this?.hierarchy?.any {
-        it.route?.contains(destination.name, true) ?: false
+        it.route?.contains(destination.id, true) ?: false
     } ?: false
 
 @Preview(showBackground = true)

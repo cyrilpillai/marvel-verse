@@ -2,5 +2,5 @@
     <string name="app_name">Marvel Verse</string>
     <string name="characters_title">Characters</string>
     <string name="comics_title">Comics</string>
-    <string name="series_title">Series</string>
+    <string name="events_title">Events</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.cyrilpillai.marvelverse.series.view
+package com.cyrilpillai.marvelverse.events.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,17 +10,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun SeriesRoute(
-    onSeriesClicked: (seriesId: String) -> Unit,
+fun EventListRoute(
+    onEventClicked: (eventId: Int) -> Unit,
 ) {
-    SeriesScreen(
-        onSeriesClicked
+    EventListScreen(
+        onEventClicked
     )
 }
 
 @Composable
-fun SeriesScreen(
-    onSeriesClicked: (seriesId: String) -> Unit,
+fun EventListScreen(
+    onEventClicked: (eventId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -29,15 +29,15 @@ fun SeriesScreen(
         modifier = modifier
             .fillMaxSize()
     ) {
-        Text(text = "Marvel Series")
+        Text(text = "Marvel Events")
     }
 }
 
 
 @Preview
 @Composable
-fun SeriesScreenPreview() {
-    SeriesScreen(
-        onSeriesClicked = {}
+fun EventListScreenPreview() {
+    EventListScreen(
+        onEventClicked = {}
     )
 }

@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.cyrilpillai.marvelverse.characters.navigation.CHARACTER_LIST_ROUTE
 import com.cyrilpillai.marvelverse.characters.navigation.characterListScreen
 import com.cyrilpillai.marvelverse.comics.navigation.comicListScreen
-import com.cyrilpillai.marvelverse.series.navigation.seriesScreen
+import com.cyrilpillai.marvelverse.events.navigation.eventListScreen
 
 @Composable
 fun MarvelVerseNavHost(
@@ -22,6 +22,6 @@ fun MarvelVerseNavHost(
     ) {
         characterListScreen {}
         comicListScreen {}
-        seriesScreen {}
+        eventListScreen {}
     }
 }
