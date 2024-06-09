@@ -17,8 +17,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.cyrilpillai.marvelverse.characters.navigation.navigateToCharactersScreen
-import com.cyrilpillai.marvelverse.comics.navigation.navigateToComicsScreen
+import com.cyrilpillai.marvelverse.characters.navigation.navigateToCharacterListScreen
+import com.cyrilpillai.marvelverse.comics.navigation.navigateToComicListScreen
 import com.cyrilpillai.marvelverse.core.navigation.MarvelNavigationBarItem
 import com.cyrilpillai.marvelverse.core.navigation.MarvelVerseNavHost
 import com.cyrilpillai.marvelverse.core.navigation.MarvelVerseNavigationBar
@@ -76,11 +76,11 @@ private fun onNavigationBarItemClicked(
         restoreState = true
     }
     when (topLevelDestination) {
-        TopLevelDestination.CHARACTERS -> navController.navigateToCharactersScreen(
+        TopLevelDestination.CHARACTERS -> navController.navigateToCharacterListScreen(
             topLevelNavOptions
         )
 
-        TopLevelDestination.COMICS -> navController.navigateToComicsScreen(
+        TopLevelDestination.COMICS -> navController.navigateToComicListScreen(
             topLevelNavOptions
         )
 

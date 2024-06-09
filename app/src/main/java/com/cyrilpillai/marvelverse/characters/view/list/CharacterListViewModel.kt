@@ -1,11 +1,11 @@
-package com.cyrilpillai.marvelverse.characters.view
+package com.cyrilpillai.marvelverse.characters.view.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cyrilpillai.marvelverse.characters.domain.CharacterRepo
-import com.cyrilpillai.marvelverse.characters.view.model.CharacterItem
-import com.cyrilpillai.marvelverse.characters.view.model.CharactersUiEvent
-import com.cyrilpillai.marvelverse.characters.view.model.CharactersUiState
+import com.cyrilpillai.marvelverse.characters.view.list.model.CharacterItem
+import com.cyrilpillai.marvelverse.characters.view.list.model.CharacterListUiEvent
+import com.cyrilpillai.marvelverse.characters.view.list.model.CharacterListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,19 +15,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CharactersViewModel @Inject constructor(
+class CharacterListViewModel @Inject constructor(
     private val characterRepo: CharacterRepo
 ) : ViewModel() {
-    val uiState: StateFlow<CharactersUiState> = characterRepo.getAllCharacters()
+    val uiState: StateFlow<CharacterListUiState> = characterRepo.getAllCharacters()
         .map { characters ->
-            CharactersUiState.Success(
+            CharacterListUiState.Success(
                 characters.map { CharacterItem(it) }
             )
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            initialValue = CharactersUiState.Loading
+            initialValue = CharacterListUiState.Loading
         )
 
     init {
@@ -38,6 +38,6 @@ class CharactersViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: CharactersUiEvent) {
+    fun onEvent(event: CharacterListUiEvent) {
     }
 }

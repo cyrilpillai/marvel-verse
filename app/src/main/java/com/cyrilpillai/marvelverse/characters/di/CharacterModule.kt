@@ -20,7 +20,7 @@ interface CharacterModule {
 
     companion object {
         @Provides
-        fun provideCharactersService(retrofit: Retrofit): CharacterService =
+        fun provideCharacterService(retrofit: Retrofit): CharacterService =
             retrofit.create(CharacterService::class.java)
 
         @Provides

@@ -1,17 +1,17 @@
-package com.cyrilpillai.marvelverse.comics.view.model
+package com.cyrilpillai.marvelverse.comics.view.list.model
 
 import com.cyrilpillai.marvelverse.comics.data.local.entity.ComicEntity
 
-sealed class ComicsUiState {
-    data object Loading : ComicsUiState()
+sealed class ComicListUiState {
+    data object Loading : ComicListUiState()
 
     data class Success(
         val comics: List<ComicItem>
-    ) : ComicsUiState()
+    ) : ComicListUiState()
 
     data class Failure(
         val errorMessage: String
-    ) : ComicsUiState()
+    ) : ComicListUiState()
 }
 
 data class ComicItem(

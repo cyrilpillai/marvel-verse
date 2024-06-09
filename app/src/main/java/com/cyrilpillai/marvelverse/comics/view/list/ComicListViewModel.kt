@@ -1,11 +1,11 @@
-package com.cyrilpillai.marvelverse.comics.view
+package com.cyrilpillai.marvelverse.comics.view.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cyrilpillai.marvelverse.comics.domain.ComicRepo
-import com.cyrilpillai.marvelverse.comics.view.model.ComicItem
-import com.cyrilpillai.marvelverse.comics.view.model.ComicsUiEvent
-import com.cyrilpillai.marvelverse.comics.view.model.ComicsUiState
+import com.cyrilpillai.marvelverse.comics.view.list.model.ComicItem
+import com.cyrilpillai.marvelverse.comics.view.list.model.ComicListUiEvent
+import com.cyrilpillai.marvelverse.comics.view.list.model.ComicListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,19 +15,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ComicsViewModel @Inject constructor(
+class ComicListViewModel @Inject constructor(
     private val comicRepo: ComicRepo
 ) : ViewModel() {
-    val uiState: StateFlow<ComicsUiState> = comicRepo.getAllComics()
+    val uiState: StateFlow<ComicListUiState> = comicRepo.getAllComics()
         .map { comics ->
-            ComicsUiState.Success(
+            ComicListUiState.Success(
                 comics.map { ComicItem(it) }
             )
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            initialValue = ComicsUiState.Loading
+            initialValue = ComicListUiState.Loading
         )
 
     init {
@@ -38,6 +38,6 @@ class ComicsViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: ComicsUiEvent) {
+    fun onEvent(event: ComicListUiEvent) {
     }
 }

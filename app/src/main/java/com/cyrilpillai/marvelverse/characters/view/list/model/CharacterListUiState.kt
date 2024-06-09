@@ -1,17 +1,17 @@
-package com.cyrilpillai.marvelverse.characters.view.model
+package com.cyrilpillai.marvelverse.characters.view.list.model
 
 import com.cyrilpillai.marvelverse.characters.data.local.entity.CharacterEntity
 
-sealed class CharactersUiState {
-    data object Loading : CharactersUiState()
+sealed class CharacterListUiState {
+    data object Loading : CharacterListUiState()
 
     data class Success(
         val characters: List<CharacterItem>
-    ) : CharactersUiState()
+    ) : CharacterListUiState()
 
     data class Failure(
         val errorMessage: String
-    ) : CharactersUiState()
+    ) : CharacterListUiState()
 }
 
 data class CharacterItem(

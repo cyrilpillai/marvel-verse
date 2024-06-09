@@ -1,4 +1,4 @@
-package com.cyrilpillai.marvelverse.comics.view
+package com.cyrilpillai.marvelverse.characters.view.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,30 +36,30 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.cyrilpillai.marvelverse.R
-import com.cyrilpillai.marvelverse.comics.view.model.ComicItem
-import com.cyrilpillai.marvelverse.comics.view.model.ComicsUiEvent
-import com.cyrilpillai.marvelverse.comics.view.model.ComicsUiState
+import com.cyrilpillai.marvelverse.characters.view.list.model.CharacterItem
+import com.cyrilpillai.marvelverse.characters.view.list.model.CharacterListUiEvent
+import com.cyrilpillai.marvelverse.characters.view.list.model.CharacterListUiState
 import com.cyrilpillai.marvelverse.ui.theme.Red100
 
 @Composable
-fun ComicsRoute(
-    onComicClicked: (comicId: Int) -> Unit,
-    viewModel: ComicsViewModel = hiltViewModel()
+fun CharacterListRoute(
+    onCharacterClicked: (characterId: Int) -> Unit,
+    viewModel: CharacterListViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    ComicsScreen(
+    CharacterListScreen(
         state,
         viewModel::onEvent,
-        onComicClicked
+        onCharacterClicked
     )
 }
 
 @Composable
-fun ComicsScreen(
-    state: ComicsUiState,
-    onEvent: (event: ComicsUiEvent) -> Unit,
-    onComicClicked: (comicId: Int) -> Unit,
+fun CharacterListScreen(
+    state: CharacterListUiState,
+    onEvent: (event: CharacterListUiEvent) -> Unit,
+    onCharacterClicked: (characterId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -77,18 +77,18 @@ fun ComicsScreen(
             )
     ) {
         when (state) {
-            is ComicsUiState.Loading -> {
+            is CharacterListUiState.Loading -> {
                 CircularProgressIndicator()
             }
 
-            is ComicsUiState.Success -> {
+            is CharacterListUiState.Success -> {
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(2),
                     contentPadding = PaddingValues(12.dp),
                     verticalItemSpacing = 12.dp,
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(state.comics) { ComicView(it, onComicClicked) }
+                    items(state.characters) { CharacterView(it, onCharacterClicked) }
                 }
             }
 
@@ -98,9 +98,9 @@ fun ComicsScreen(
 }
 
 @Composable
-fun ComicView(
-    comicItem: ComicItem,
-    onComicClicked: (comicId: Int) -> Unit,
+fun CharacterView(
+    characterItem: CharacterItem,
+    onCharacterClicked: (characterId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var sizeImage by remember { mutableStateOf(IntSize.Zero) }
@@ -112,12 +112,12 @@ fun ComicView(
                 elevation = 2.dp,
                 shape = RoundedCornerShape(24.dp)
             )
-            .clickable { onComicClicked(comicItem.id) }
+            .clickable { onCharacterClicked(characterItem.id) }
     ) {
         AsyncImage(
-            model = comicItem.thumbnailUrl,
+            model = characterItem.thumbnailUrl,
             placeholder = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "comic image",
+            contentDescription = "character image",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
@@ -137,7 +137,7 @@ fun ComicView(
                 )
         )
         Text(
-            text = comicItem.title,
+            text = characterItem.name,
             color = Color.White,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -154,19 +154,23 @@ fun ComicView(
 
 @Preview
 @Composable
-fun ComicsScreenPreview() {
-    ComicsScreen(
-        state = ComicsUiState.Success(
-            comics = listOf(
-                ComicItem(
-                    id = 201,
-                    title = "Marvel Previews (2017)",
-                    description = "",
-                    thumbnailUrl = "http://i.annihil.us/u/prod/marvel/i/mg/c/80/5e3d7536c8ada.jpg"
+fun CharacterListScreenPreview() {
+    CharacterListScreen(
+        state = CharacterListUiState.Success(
+            characters = listOf(
+                CharacterItem(
+                    id = 101,
+                    name = "Avengers",
+                    description = """Earth's Mightiest Heroes joined forces to take on 
+                        |threats that were too big for any one hero to tackle. With a 
+                        |roster that has included Captain America, Iron Man, Ant-Man, Hulk, 
+                        |Thor, Wasp and dozens more over the years, the Avengers have come 
+                        |to be regarded as Earth's No. 1 team.""".trimMargin(),
+                    thumbnailUrl = "http://i.annihil.us/u/prod/marvel/i/mg/9/20/5102c774ebae7.jpg"
                 )
             )
         ),
         onEvent = {},
-        onComicClicked = {}
+        onCharacterClicked = {}
     )
 }

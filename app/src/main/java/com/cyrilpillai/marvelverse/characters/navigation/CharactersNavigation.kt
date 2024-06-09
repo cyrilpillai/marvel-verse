@@ -4,22 +4,22 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.cyrilpillai.marvelverse.characters.view.CharactersRoute
+import com.cyrilpillai.marvelverse.characters.view.list.CharacterListRoute
 
-const val CHARACTERS_ROUTE = "characters_route"
+const val CHARACTER_LIST_ROUTE = "character_list_route"
 
-fun NavController.navigateToCharactersScreen(
+fun NavController.navigateToCharacterListScreen(
     navOptions: NavOptions
 ) {
-    navigate(CHARACTERS_ROUTE, navOptions)
+    navigate(CHARACTER_LIST_ROUTE, navOptions)
 }
 
-fun NavGraphBuilder.charactersScreen(
+fun NavGraphBuilder.characterListScreen(
     onCharacterClicked: (characterId: Int) -> Unit
 ) {
     composable(
-        route = CHARACTERS_ROUTE,
+        route = CHARACTER_LIST_ROUTE,
     ) {
-        CharactersRoute(onCharacterClicked)
+        CharacterListRoute(onCharacterClicked)
     }
 }

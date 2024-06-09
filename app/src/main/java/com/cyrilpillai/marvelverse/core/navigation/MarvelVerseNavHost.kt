@@ -4,24 +4,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.cyrilpillai.marvelverse.characters.navigation.CHARACTERS_ROUTE
-import com.cyrilpillai.marvelverse.characters.navigation.charactersScreen
-import com.cyrilpillai.marvelverse.comics.navigation.comicsScreen
+import com.cyrilpillai.marvelverse.characters.navigation.CHARACTER_LIST_ROUTE
+import com.cyrilpillai.marvelverse.characters.navigation.characterListScreen
+import com.cyrilpillai.marvelverse.comics.navigation.comicListScreen
 import com.cyrilpillai.marvelverse.series.navigation.seriesScreen
 
 @Composable
 fun MarvelVerseNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = CHARACTERS_ROUTE
+    startDestination: String = CHARACTER_LIST_ROUTE
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
-        charactersScreen {}
-        comicsScreen {}
+        characterListScreen {}
+        comicListScreen {}
         seriesScreen {}
     }
 }
