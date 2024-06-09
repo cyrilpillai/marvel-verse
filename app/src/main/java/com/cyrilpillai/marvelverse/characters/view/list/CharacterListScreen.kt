@@ -13,6 +13,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -105,49 +107,56 @@ fun CharacterView(
 ) {
     var sizeImage by remember { mutableStateOf(IntSize.Zero) }
 
-    Box(
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        shape = RoundedCornerShape(24.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
         modifier = modifier
-            .fillMaxWidth()
-            .shadow(
-                elevation = 2.dp,
-                shape = RoundedCornerShape(24.dp)
-            )
             .clickable { onCharacterClicked(characterItem.id) }
     ) {
-        AsyncImage(
-            model = characterItem.thumbnailUrl,
-            placeholder = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "character image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .onGloballyPositioned {
-                    sizeImage = it.size
-                }
-        )
         Box(
             modifier = Modifier
-                .matchParentSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, Color.Black),
-                        startY = sizeImage.height.toFloat() / 3,  // 1/3
-                        endY = sizeImage.height.toFloat()
+                .fillMaxWidth()
+        ) {
+            AsyncImage(
+                model = characterItem.thumbnailUrl,
+                placeholder = painterResource(id = R.drawable.ic_launcher_background),
+                contentDescription = "character image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .onGloballyPositioned {
+                        sizeImage = it.size
+                    }
+            )
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black),
+                            startY = sizeImage.height.toFloat() / 3,  // 1/3
+                            endY = sizeImage.height.toFloat()
+                        )
                     )
-                )
-        )
-        Text(
-            text = characterItem.name,
-            color = Color.White,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(
-                    vertical = 8.dp,
-                    horizontal = 12.dp
-                )
-        )
+            )
+            Text(
+                text = characterItem.name,
+                color = Color.White,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(
+                        vertical = 8.dp,
+                        horizontal = 12.dp
+                    )
+            )
+        }
     }
 }
 

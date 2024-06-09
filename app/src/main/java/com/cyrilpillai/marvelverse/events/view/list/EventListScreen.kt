@@ -1,6 +1,7 @@
 package com.cyrilpillai.marvelverse.events.view.list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -97,10 +98,14 @@ fun EventView(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier,
         colors = CardDefaults.cardColors(
             containerColor = Color.White
-        )
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
+        modifier = modifier
+            .clickable { onEventClicked(eventItem.id) }
     ) {
         AsyncImage(
             model = eventItem.thumbnailUrl,

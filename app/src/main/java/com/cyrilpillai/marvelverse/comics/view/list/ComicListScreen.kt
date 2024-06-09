@@ -6,13 +6,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -83,7 +84,7 @@ fun ComicListScreen(
 
             is ComicListUiState.Success -> {
                 LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(2),
+                    columns = StaggeredGridCells.Fixed(3),
                     contentPadding = PaddingValues(12.dp),
                     verticalItemSpacing = 12.dp,
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -105,49 +106,56 @@ fun ComicView(
 ) {
     var sizeImage by remember { mutableStateOf(IntSize.Zero) }
 
-    Box(
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
         modifier = modifier
-            .fillMaxWidth()
-            .shadow(
-                elevation = 2.dp,
-                shape = RoundedCornerShape(24.dp)
-            )
+            .aspectRatio(0.7f)
             .clickable { onComicClicked(comicItem.id) }
     ) {
-        AsyncImage(
-            model = comicItem.thumbnailUrl,
-            placeholder = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "comic image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .onGloballyPositioned {
-                    sizeImage = it.size
-                }
-        )
         Box(
             modifier = Modifier
-                .matchParentSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, Color.Black),
-                        startY = sizeImage.height.toFloat() / 3,  // 1/3
-                        endY = sizeImage.height.toFloat()
+                .fillMaxWidth()
+        ) {
+            AsyncImage(
+                model = comicItem.thumbnailUrl,
+                placeholder = painterResource(id = R.drawable.ic_launcher_background),
+                contentDescription = "comic image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .onGloballyPositioned {
+                        sizeImage = it.size
+                    }
+            )
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black),
+                            startY = sizeImage.height.toFloat() / 3,  // 1/3
+                            endY = sizeImage.height.toFloat()
+                        )
                     )
-                )
-        )
-        Text(
-            text = comicItem.title,
-            color = Color.White,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(
-                    vertical = 8.dp,
-                    horizontal = 12.dp
-                )
-        )
+            )
+            Text(
+                text = comicItem.title,
+                color = Color.White,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(
+                        vertical = 8.dp,
+                        horizontal = 12.dp
+                    )
+            )
+        }
     }
 }
 
