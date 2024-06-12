@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface CharacterRepo {
     suspend fun getCharactersCount(): Int
     fun getAllCharacters(): Flow<List<CharacterEntity>>
-    suspend fun fetchCharacters()
+    suspend fun fetchCharacters(offset: Int, limit: Int)
 }

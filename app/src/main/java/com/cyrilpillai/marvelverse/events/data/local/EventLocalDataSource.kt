@@ -8,11 +8,11 @@ import javax.inject.Inject
 class EventLocalDataSource @Inject constructor(
     private val eventDao: EventDao
 ) {
-    suspend fun insertAllEvents(events: List<EventEntity>) {
-        eventDao.insertAllEvents(events)
+    suspend fun upsertAllEvents(events: List<EventEntity>) {
+        eventDao.upsertAllEvents(events)
     }
 
-    suspend fun getEventsCount(): Int = eventDao.getEventsCount()
+    suspend fun getEventsCount(): Int = eventDao.getEventCount()
 
     fun getAllEvents(): Flow<List<EventEntity>> = eventDao.getAllEvents()
 }

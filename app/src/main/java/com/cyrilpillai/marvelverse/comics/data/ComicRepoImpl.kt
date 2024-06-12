@@ -23,7 +23,7 @@ class ComicRepoImpl @Inject constructor(
     override suspend fun fetchComics() {
         remoteDataSource.fetchComics()
             .onSuccess { comics ->
-                localDataSource.insertAllComics(
+                localDataSource.upsertAllComics(
                     comics.map {
                         ComicEntity(it)
                     }

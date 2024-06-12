@@ -23,7 +23,7 @@ class EventRepoImpl @Inject constructor(
     override suspend fun fetchEvents() {
         remoteDataSource.fetchEvents()
             .onSuccess { events ->
-                localDataSource.insertAllEvents(
+                localDataSource.upsertAllEvents(
                     events.map {
                         EventEntity(it)
                     }

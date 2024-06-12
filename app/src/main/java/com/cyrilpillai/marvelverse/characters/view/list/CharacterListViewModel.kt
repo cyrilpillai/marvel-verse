@@ -2,41 +2,27 @@ package com.cyrilpillai.marvelverse.characters.view.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.cachedIn
+import androidx.paging.map
+import com.cyrilpillai.marvelverse.characters.data.local.entity.CharacterEntity
 import com.cyrilpillai.marvelverse.characters.domain.CharacterRepo
 import com.cyrilpillai.marvelverse.characters.view.list.model.CharacterItem
 import com.cyrilpillai.marvelverse.characters.view.list.model.CharacterListUiEvent
-import com.cyrilpillai.marvelverse.characters.view.list.model.CharacterListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterListViewModel @Inject constructor(
+    pager: Pager<Int, CharacterEntity>,
     private val characterRepo: CharacterRepo
 ) : ViewModel() {
-    val uiState: StateFlow<CharacterListUiState> = characterRepo.getAllCharacters()
-        .map { characters ->
-            CharacterListUiState.Success(
-                characters.map { CharacterItem(it) }
-            )
+    val characterItemFlow = pager.flow
+        .map { pagingData ->
+            pagingData.map { CharacterItem(it) }
         }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = CharacterListUiState.Loading
-        )
-
-    init {
-        viewModelScope.launch {
-            if (characterRepo.getCharactersCount() < 1) {
-                characterRepo.fetchCharacters()
-            }
-        }
-    }
+        .cachedIn(viewModelScope)
 
     fun onEvent(event: CharacterListUiEvent) {
     }

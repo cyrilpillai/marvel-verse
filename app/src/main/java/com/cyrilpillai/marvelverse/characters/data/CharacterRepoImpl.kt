@@ -20,10 +20,13 @@ class CharacterRepoImpl @Inject constructor(
     override fun getAllCharacters(): Flow<List<CharacterEntity>> =
         localDataSource.getAllCharacters()
 
-    override suspend fun fetchCharacters() {
-        remoteDataSource.fetchCharacters()
+    override suspend fun fetchCharacters(
+        offset: Int,
+        limit: Int
+    ) {
+        remoteDataSource.fetchCharacters(offset, limit)
             .onSuccess { characters ->
-                localDataSource.insertAllCharacters(
+                localDataSource.upsertAllCharacters(
                     characters.map {
                         CharacterEntity(it)
                     }

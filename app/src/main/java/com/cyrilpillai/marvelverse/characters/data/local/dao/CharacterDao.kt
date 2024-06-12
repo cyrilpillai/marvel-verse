@@ -1,20 +1,17 @@
 package com.cyrilpillai.marvelverse.characters.data.local.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Upsert
 import com.cyrilpillai.marvelverse.characters.data.local.entity.CharacterEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CharacterDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCharacter(character: CharacterEntity)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCharacters(characters: List<CharacterEntity>)
+    @Upsert
+    suspend fun upsertAllCharacters(characters: List<CharacterEntity>)
 
     @Query("SELECT COUNT(id) FROM characters")
     suspend fun getCharactersCount(): Int
@@ -22,4 +19,10 @@ interface CharacterDao {
     @Transaction
     @Query("SELECT * FROM characters")
     fun getAllCharacters(): Flow<List<CharacterEntity>>
+
+    @Query("SELECT * FROM characters")
+    fun pagingSource(): PagingSource<Int, CharacterEntity>
+
+    @Query("DELETE FROM characters")
+    suspend fun clearAllCharacters(): Int
 }

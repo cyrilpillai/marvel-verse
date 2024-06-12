@@ -8,8 +8,8 @@ import javax.inject.Inject
 class ComicLocalDataSource @Inject constructor(
     private val comicDao: ComicDao
 ) {
-    suspend fun insertAllComics(comics: List<ComicEntity>) {
-        comicDao.insertAllComics(comics)
+    suspend fun upsertAllComics(comics: List<ComicEntity>) {
+        comicDao.upsertAllComics(comics)
     }
 
     suspend fun getComicsCount(): Int = comicDao.getComicsCount()

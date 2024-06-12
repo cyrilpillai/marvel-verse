@@ -8,8 +8,8 @@ import javax.inject.Inject
 class CharacterLocalDataSource @Inject constructor(
     private val characterDao: CharacterDao
 ) {
-    suspend fun insertAllCharacters(characters: List<CharacterEntity>) {
-        characterDao.insertAllCharacters(characters)
+    suspend fun upsertAllCharacters(characters: List<CharacterEntity>) {
+        characterDao.upsertAllCharacters(characters)
     }
 
     suspend fun getCharactersCount(): Int = characterDao.getCharactersCount()

@@ -7,7 +7,10 @@ import javax.inject.Inject
 class CharacterRemoteDataSource @Inject constructor(
     private val service: CharacterService
 ) {
-    suspend fun fetchCharacters(): NetworkResult<List<CharacterResource>> {
-        return service.getCharacters()
+    suspend fun fetchCharacters(
+        offset: Int,
+        limit: Int
+    ): NetworkResult<List<CharacterResource>> {
+        return service.getCharacters(offset, limit)
     }
 }
